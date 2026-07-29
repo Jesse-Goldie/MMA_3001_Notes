@@ -1,9 +1,20 @@
-"""The code generates a set of noisy PNG images 
-(via generate_noisy_images from generator.py) and then computes 
-a pixel-wise average of all PNGs in a directory to produce a single 
-"averaged" image (used as a simple denoised result). 
-Running main.py will create 30 images in generated_images and save 
-the averaged output as denoised.png."""
+"""Averager utilities.
+
+This module provides a small utility to compute the pixel-wise average of all
+PNG images in a given directory and save the result as a new PNG file. The
+averaged image can be used as a simple denoised output when multiple noisy
+captures of the same scene are available.
+
+Example:
+    from averager import average_images
+    average_images("generated_images", "denoised.png")
+
+Notes:
+    - All input images are assumed to have the same dimensions and number of
+      channels (e.g., all RGB or all grayscale).
+    - The implementation uses a float64 accumulator to avoid overflow during
+      summation, then casts the computed mean back to uint8 for saving.
+"""
 
 import numpy as np
 from PIL import Image
